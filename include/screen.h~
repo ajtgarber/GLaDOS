@@ -1,0 +1,37 @@
+#include "common.h"
+
+#ifndef SCREEN_H
+#define SCREEN_H
+
+#define BLACK 0
+#define BLUE 1
+#define GREEN 2
+#define CYAN 3
+#define RED 4
+#define MAGENTA
+#define BROWN 6
+#define LIGHT_GREY 7
+#define DARK_GREY 8
+#define LIGHT_BLUE
+#define LIGHT_GREEN
+#define LIGHT_CYAN 11
+#define LIGHT_RED 12
+#define LIGHT_MAGENTA 13
+#define LIGHT_BROWN 14
+#define WHITE 15
+
+char* texmemptr;
+int position;
+int foreground;
+int background;
+int colour;
+
+void init_video();
+void cls();
+void putch(char c);
+void puts(char* str);
+void setBackground(int background);
+void setForeground(int foreground);
+void updateColour();
+
+#endif
