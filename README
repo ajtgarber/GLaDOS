@@ -1,0 +1,5 @@
+This is just a toy kernel that (so far) has had about 99% of its code come
+from tutorials (JamesM and BKern). The project (as much as one can call
+following tutorials a project) is just for me to more fully understand what
+goes on behind the scenes, but at some point I'm planning on experimenting
+with an exokernel, but that's for another kernel.
