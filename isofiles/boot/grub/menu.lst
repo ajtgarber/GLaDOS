@@ -1,8 +1,0 @@
-default 0
-#timeout 30
-
-#title Boot from hard disk
-#chainloader (hd0)+1
-
-title GLaDOS v sqrt(-1)
-kernel /boot/kernel

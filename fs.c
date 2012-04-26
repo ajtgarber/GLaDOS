@@ -21,7 +21,7 @@ struct dirent* readdir_fs(fs_node_t* node, u32int index) {
 	if((node->flags & 0x7) == FS_DIRECTORY && node->readdir != 0)
 		return node->readdir(node, index);
 	else
-`		return 0;
+		return 0;
 }
 fs_node_t* finddir_fs(fs_node_t* node, char* name) {
 	if((node->flags & 0x7) == FS_DIRECTORY && node->finddir != 0)

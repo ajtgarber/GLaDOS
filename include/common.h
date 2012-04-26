@@ -15,6 +15,9 @@ u16int inw(u16int port);
 int strlen(char* str);
 void memset(char* dst, char value, int length);
 void memsetw(short* dst, short value, int length);
+void strcpy(char* dst, char* src);
+void memcpy(char* dst, char* src, u32int size);
+int  strcmp(char* str1, char* str2);
 
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);
 #define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))

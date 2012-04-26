@@ -29,7 +29,7 @@ static struct dirent* initrd_readdir(fs_node_t* node, u32int index) {
 
 	if(index-1 >= nroot_nodes)
 		return 0;
-	strcpy(dirent.name root_nodes[index-1].name);
+	strcpy(dirent.name, root_nodes[index-1].name);
 	dirent.name[strlen(root_nodes[index-1].name)] = 0; //Make sure string is null terminated
 	dirent.ino = root_nodes[index-1].inode;
 	return &dirent;
@@ -39,7 +39,7 @@ static fs_node_t* initrd_finddir(fs_node_t* node, char* name) {
 	if(node == initrd_root &&
 		!strcmp(name, "dev") )
 		return initrd_dev;
-	
+
 	int i;
 	for(i = 0; i < nroot_nodes; i++)
 		if(!strcmp(name, root_nodes[i].name))
@@ -47,7 +47,7 @@ static fs_node_t* initrd_finddir(fs_node_t* node, char* name) {
 	return 0;
 }
 
-fs_node_t* initialize_initrd(u32int location) {
+fs_node_t* initialise_initrd(u32int location) {
 	//Initialise the main and file header pointers and populate the root directory
 	initrd_header = (initrd_header_t*)location;
 	file_headers = (initrd_file_header_t*) (location+sizeof(initrd_header_t));
@@ -55,7 +55,7 @@ fs_node_t* initialize_initrd(u32int location) {
 	//Initialise the root directory
 	initrd_root = (fs_node_t*)kmalloc(sizeof(fs_node_t));
 	strcpy(initrd_root->name, "initrd");
-	initrd_root->mask = initrd_root->uid = initrd_root->gid = initrd->root->inode = initrd->length = 0;
+	initrd_root->mask = initrd_root->uid = initrd_root->gid = initrd_root->inode = initrd_root->length = 0;
 	initrd_root->flags = FS_DIRECTORY;
 	initrd_root->read = 0;
 	initrd_root->write = 0;
@@ -67,7 +67,7 @@ fs_node_t* initialize_initrd(u32int location) {
 	initrd_root->impl = 0;
 
 	//Initialise the /dev directory (required!)
-	initrd_dev = (fs_node_t*)kamlloc(sizeof(fs_node_t));
+	initrd_dev = (fs_node_t*)kmalloc(sizeof(fs_node_t));
 	strcpy(initrd_dev->name, "dev");
 	initrd_dev->mask = initrd_dev->uid = initrd_dev->gid = initrd_dev->inode = initrd_dev->length = 0;
 	initrd_dev->flags = FS_DIRECTORY;

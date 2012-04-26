@@ -20,7 +20,6 @@ int strlen(char* str) {
 	for(i = 0; str[i] != 0 ; i++);
 	return i;
 }
-
 void memset(char* dst, char value, int length) {
 	int i;
 	for(i = 0; i < length; i++) {
@@ -32,6 +31,34 @@ void memsetw(short* dst, short value, int length) {
 	for(i = 0; i < length; i++) {
 		dst[i] = value;
 	}
+}
+void memcpy(char* dst, char* src, u32int length) {
+	int i;
+	for(i = 0; i < length; i++) {
+		dst[i] = src[i];
+	}
+}
+void strcpy(char* dst, char* src) {
+	int length = strlen(src);
+	int i;
+	for(i = 0; i < length; i++) {
+		dst[i] = src[i];
+	}
+}
+int  strcmp(char* str1, char* str2) {
+	int length1 = strlen(str1);
+	int length2 = strlen(str2);
+	int length = (length1 > length2) ? length1 : length2;
+	int i;
+	for(i = 0; i < length; i++) {
+		if(str1[i] > str2[i])
+			return -1;
+		else if(str1[i] < str2[i])
+			return 1;
+	}
+	if(length1 > length2) return -1;
+	else if(length1 < length2) return 1;
+	else return 0;
 }
 
 

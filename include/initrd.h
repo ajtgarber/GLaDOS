@@ -1,6 +1,9 @@
 #ifndef INITRD_H
 #define INITRD_H
 
+#include <common.h>
+#include <fs.h>
+
 typedef struct {
 	u32int nfiles; //The number of files in the ramdisk
 } initrd_header_t;
