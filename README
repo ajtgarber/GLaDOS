@@ -1,3 +1,10 @@
+Prerequisites:
+qemu
+gcc
+nasm
+genisoimage
+(and for now) a *nix system.
+
 This is just a toy kernel that (so far) has had about 99% of its code come
 from tutorials (JamesM and BKern). The project (as much as one can call
 following tutorials a project) is just for me to more fully understand what
