@@ -162,7 +162,7 @@ static s8int header_t_less_than(void*a, void *b)
 heap_t *create_heap(u32int start, u32int end_addr, u32int max, u8int supervisor, u8int readonly)
 {
 	//DEBUG
-	puts("create_heap():kheap.c:165: \nSTART:");
+	/*puts("create_heap():kheap.c:165: \nSTART:");
 	puthex(start);
 	puts("\nEND:");
 	puthex(end_addr);
@@ -172,13 +172,13 @@ heap_t *create_heap(u32int start, u32int end_addr, u32int max, u8int supervisor,
 	puthex(placement_address);
 	puts("\nkheap: ");
 	puthex(kheap);
-	puts("\n");
+	puts("\n");*/
 	//END DEBUG
 
     heap_t *heap = (heap_t*)kmalloc(sizeof(heap_t));
-	puts("heap location: ");
-	puthex(heap);
-	puts("\n");
+	//puts("heap location: ");
+	//puthex(heap);
+	//puts("\n");
 
     // All our assumptions are made on startAddress and endAddress being page-aligned.
     ASSERT(start%0x1000 == 0);

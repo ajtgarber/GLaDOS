@@ -12,6 +12,7 @@ ASFLAGS=-felf32
 all: $(SOURCES) link
 
 iso:
+	cp tools/initrd.img isofiles/boot/boot/
 	cp kernel isofiles/boot/boot/
 	isofiles/geniso.sh
 

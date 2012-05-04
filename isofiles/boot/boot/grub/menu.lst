@@ -6,3 +6,4 @@ default 0
  
 title GLaDOS
 kernel /boot/kernel
+module (cd)/boot/initrd.img

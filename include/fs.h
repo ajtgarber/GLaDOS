@@ -11,7 +11,7 @@
 #define FS_SYMLINK     0x06
 #define FS_MOUNTPOINT  0x08 //Is the file an active mount point?
 
-struct dirent {
+typedef struct dirent {
 	char name[128]; //Filename
 	u32int ino;     //Inode number. Required by POSIX
 };

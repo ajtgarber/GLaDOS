@@ -20,9 +20,6 @@ int main(multiboot_header_t *mboot_ptr)
 	//timer_install();
 	keyboard_install();
 	init_video();
-	//initialise_paging();
-
-	//sti();
 
 	ASSERT(mboot_ptr->mods_count > 0);
 	u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
@@ -34,6 +31,34 @@ int main(multiboot_header_t *mboot_ptr)
 	sti();
 
 	fs_root = initialise_initrd(initrd_location);
+
+	puts("Testing initrd...\n");
+	puts("Location of fs_root: ");
+	puthex(fs_root);
+	puts("\n");
+	puts("Listing contents of /\n");
+	// list the contents of /
+	int i = 0;
+	struct dirent *node = 0;
+	while ( (node = readdir_fs(fs_root, i)) != 0) {
+  		puts("Found file ");
+  		puts(node->name);
+  		fs_node_t *fsnode = finddir_fs(fs_root, node->name);
+
+  		if ((fsnode->flags&0x7) == FS_DIRECTORY)
+    		puts("\n\t(directory)\n");
+  		else {
+    		puts("\n\t contents: \"");
+    		char buf[256];
+    		u32int sz = read_fs(fsnode, 0, 256, buf);
+    		int j;
+    		for (j = 0; j < sz; j++)
+      			putch(buf[j]);
+
+    		puts("\"\n");
+  		}
+  		i++;
+	}
 
 	puts("GLaDOS v sqrt(-1) started... beware (of bugs)\n");
 	puts("> ");

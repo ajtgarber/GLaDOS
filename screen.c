@@ -64,6 +64,11 @@ void putch(char c) {
 	}
 	//moveCursor(position/2, screenY);
 	moveCursor(screenX, screenY);
+
+	if(screenY > 25) {
+		cls();
+		//moveCursor(0,0);
+	}
 }
 void puts(char* str) {
 	int length = strlen(str);
