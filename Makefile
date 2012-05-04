@@ -5,13 +5,14 @@
 
 SOURCES=boot.o main.o common.o screen.o gdt.o idt.o isrs.o irq.o timer.o kb.o kheap.o paging.o ordered_array.o fs.o initrd.o
 
-CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -Iinclude
-LDFLAGS=-Tlink.ld
-ASFLAGS=-felf
+CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -Iinclude -m32
+LDFLAGS=-melf_i386 -Tlink.ld
+ASFLAGS=-felf32
 
 all: $(SOURCES) link
 
 iso:
+	cp kernel isofiles/boot/boot/
 	isofiles/geniso.sh
 
 run:
