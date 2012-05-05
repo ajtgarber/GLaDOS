@@ -65,9 +65,10 @@ void putch(char c) {
 	//moveCursor(position/2, screenY);
 	moveCursor(screenX, screenY);
 
-	if(screenY > 25) {
-		cls();
-		//moveCursor(0,0);
+	if(screenY >= 25) {
+		screenX = 0;
+		screenY = 0;
+		position = 0;
 	}
 }
 void puts(char* str) {
@@ -144,7 +145,7 @@ void cls() {
 	position = 0;
 	screenX = 0;
 	screenY = 0;
-	moveCursor(0, 0);
+	//moveCursor(0, 0);
 }
 void moveCursor(int x, int y) {
 	unsigned temp;

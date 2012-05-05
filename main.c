@@ -31,7 +31,6 @@ int main(multiboot_header_t *mboot_ptr)
 	sti();
 
 	fs_root = initialise_initrd(initrd_location);
-
 	puts("Testing initrd...\n");
 	puts("Location of fs_root: ");
 	puthex(fs_root);

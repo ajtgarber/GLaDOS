@@ -48,8 +48,7 @@ static fs_node_t* initrd_finddir(fs_node_t* node, char* name) {
 }
 
 fs_node_t* initialise_initrd(u32int location) {
-	puts("[initrd.c : initialise_initrd] Entering function...");
-	hlt();
+	puts("[initrd.c : initialise_initrd] Entering function...\n");
 	// Initialise the main and file header pointers and populate the root directory.
     initrd_header = (initrd_header_t *)location;
     file_headers = (initrd_file_header_t *) (location+sizeof(initrd_header_t));
@@ -107,7 +106,6 @@ fs_node_t* initialise_initrd(u32int location) {
         root_nodes[i].close = 0;
         root_nodes[i].impl = 0;
     }
-	puts("[initrd.c : initialise_initrd]: Exiting function...");
-	hlt();
+	puts("[initrd.c : initialise_initrd]: Exiting function...\n");
     return initrd_root;
 }
