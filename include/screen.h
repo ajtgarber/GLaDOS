@@ -32,7 +32,7 @@ char isPrintable(char c);
 
 void init_video();
 void cls();
-void putch(char c);
+void putch(char c, char updateCursor);
 void puts(char* str);
 void puthex(u32int n);
 void putdec(u32int n);

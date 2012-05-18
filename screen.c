@@ -5,7 +5,7 @@ void init_video() {
 	position = 0;
 	screenX = 0;
 	screenY = 0;
-	foreground = LIGHT_MAGENTA;
+	foreground = WHITE;
 	background = BLACK;
 	updateColour();
 	cls();
@@ -21,7 +21,7 @@ void setForeground(int fore) {
 	foreground = fore;
 	updateColour();
 }
-void putch(char c) {
+void putch(char c, char updateCaret) {
 	if(c == '\b') {
 		//texmemptr[position] = ' ';
 		//texmemptr[position+1] = colour;
@@ -40,14 +40,16 @@ void putch(char c) {
 		texmemptr[position] = ' ';
 		texmemptr[position+1] = colour;
 		//moveCursor(position/2, 0);
-		moveCursor(screenX, screenY);
+		if(updateCaret)
+			moveCursor(screenX, screenY);
 		return;
 	} else if(c == '\n') {
 		int delta = 80-screenX;
 		screenX = 0;
 		screenY++;
 		position += (delta*2);
-		moveCursor(screenX, screenY);
+		if(updateCaret)
+			moveCursor(screenX, screenY);
 		//moveCursor(position/2, screenY);
 		return;
 	}
@@ -63,7 +65,8 @@ void putch(char c) {
 		position = 2*(screenY*80)+screenX;
 	}
 	//moveCursor(position/2, screenY);
-	moveCursor(screenX, screenY);
+	if(updateCaret)	
+		moveCursor(screenX, screenY);
 
 	if(screenY >= 25) {
 		screenX = 0;
@@ -75,8 +78,9 @@ void puts(char* str) {
 	int length = strlen(str);
 	int i;
 	for(i = 0; i < length; i++) {
-		putch(str[i]);
+		putch(str[i], 0);
 	}
+	moveCursor(screenX, screenY);
 }
 void puthex(u32int n) {
 	s32int tmp;
@@ -92,18 +96,18 @@ void puthex(u32int n) {
     
         if (tmp >= 0xA) {
             noZeroes = 0;
-			putch(tmp-0xA+'a');
+	    putch(tmp-0xA+'a', 1);
         } else {
             noZeroes = 0;
-            putch(tmp+'0');
+            putch(tmp+'0', 1);
         }
     }
   
     tmp = n & 0xF;
     if (tmp >= 0xA) {
-        putch(tmp-0xA+'a');
+        putch(tmp-0xA+'a', 1);
     } else {
-        putch(tmp+'0');
+        putch(tmp+'0', 1);
     }
 }
 void putdec(u32int n)
@@ -111,7 +115,7 @@ void putdec(u32int n)
 
     if (n == 0)
     {
-        putch('0');
+        putch('0', 1);
         return;
     }
 
@@ -140,7 +144,7 @@ void cls() {
 	position = 0;
 	int i;
 	for(i = 0; i < 80*25; i++) {
-		putch(' ');
+		putch(' ', 0);
 	}
 	position = 0;
 	screenX = 0;

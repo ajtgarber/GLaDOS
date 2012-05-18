@@ -52,7 +52,7 @@ int main(multiboot_header_t *mboot_ptr)
     		u32int sz = read_fs(fsnode, 0, 256, buf);
     		int j;
     		for (j = 0; j < sz; j++)
-      			putch(buf[j]);
+      			putch(buf[j], 0);
 
     		puts("\"\n");
   		}
