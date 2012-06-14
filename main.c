@@ -8,16 +8,21 @@
 #include <paging.h>
 #include <fs.h>
 #include <initrd.h>
+#include <task.h>
 
 extern u32int placement_address;
 
-int main(multiboot_header_t *mboot_ptr)
+u32int initial_esp;
+
+int main(multiboot_header_t *mboot_ptr, u32int initial_stack)
 {
+	initial_esp = initial_stack;
 	gdt_install();
 	idt_install();
 	isrs_install();
 	irq_install();
 	timer_install();
+	//timer_phase(100); //100 hz
 	keyboard_install();
 	init_video();
 
@@ -28,9 +33,22 @@ int main(multiboot_header_t *mboot_ptr)
 	placement_address = initrd_end;
 
 	initialise_paging();
+	initialise_tasking();
 	sti();
 
 	fs_root = initialise_initrd(initrd_location);
+
+	int ret = fork();
+
+	puts("fork() returned ");
+	puthex(ret);
+	puts(", and getpid() returned ");
+	puthex(getpid());
+	puts("\n============================================");
+
+	//This next section isn't reentrant so make sure we're not interrupted
+	cli();
+
 	puts("Testing initrd...\n");
 	puts("Location of fs_root: ");
 	puthex(fs_root);
@@ -58,6 +76,8 @@ int main(multiboot_header_t *mboot_ptr)
   		}
   		i++;
 	}
+	
+	sti();
 
 	puts("GLaDOS v sqrt(-1) started... beware (of bugs)\n");
 	puts("> ");

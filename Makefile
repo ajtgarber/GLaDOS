@@ -3,7 +3,7 @@
 # The only one that needs changing is the assembler 
 # rule, as we use nasm instead of GNU as.
 
-SOURCES=boot.o main.o common.o screen.o gdt.o idt.o isrs.o irq.o timer.o kb.o kheap.o paging.o ordered_array.o fs.o initrd.o
+SOURCES=boot.o main.o common.o screen.o gdt.o idt.o isrs.o irq.o timer.o kb.o kheap.o paging.o ordered_array.o fs.o process.o initrd.o task.o
 
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -Iinclude -m32
 LDFLAGS=-melf_i386 -Tlink.ld

@@ -1,4 +1,5 @@
 #include <system.h>
+#include <task.h>
 
 int timer_ticks = 0;
 
@@ -11,11 +12,7 @@ int timer_ticks = 0;
 */
 void timer_handler(struct regs* r) {
 	timer_ticks++;
-
-	if(timer_ticks % 18 == 0) {
-		//approximately a second has passed
-		puts("One second has passed\n");
-	}
+	switch_task();
 }
 
 void timer_phase(int hz) {
