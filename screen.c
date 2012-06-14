@@ -22,11 +22,8 @@ void setForeground(int fore) {
 	updateColour();
 }
 void putch(char c, char updateCaret) {
+	if(!isPrintable(c) && c != '\b' && c != '\n') return;
 	if(c == '\b') {
-		//texmemptr[position] = ' ';
-		//texmemptr[position+1] = colour;
-
-		position -= 2;
 		screenX--;
 		if(screenX < 0) {
 			screenX = 80;
@@ -36,43 +33,29 @@ void putch(char c, char updateCaret) {
 				screenY = 0;
 			}
 		}
-		if(position < 0) position = 0;
 		texmemptr[position] = ' ';
 		texmemptr[position+1] = colour;
-		//moveCursor(position/2, 0);
-		if(updateCaret)
-			moveCursor(screenX, screenY);
-		return;
 	} else if(c == '\n') {
 		int delta = 80-screenX;
 		screenX = 0;
 		screenY++;
-		position += (delta*2);
-		if(updateCaret)
-			moveCursor(screenX, screenY);
-		//moveCursor(position/2, screenY);
-		return;
+	} else {
+		texmemptr[position] = c;
+		texmemptr[position+1] = colour;
+		screenX++;
+		if(screenX > 80) {
+			screenY++;
+			screenX = 0;
+		}
 	}
-	if(!isPrintable(c)) return;
-	texmemptr[position] = c;
-	texmemptr[position+1] = colour;
-	position += 2;
-	screenX++;
-	if(screenX > 80) {
-		screenY++;
-		screenX = 0;
-		//try to bullshit the position (it works!)
-		position = 2*(screenY*80)+screenX;
-	}
-	//moveCursor(position/2, screenY);
-	if(updateCaret)	
-		moveCursor(screenX, screenY);
-
 	if(screenY >= 25) {
 		screenX = 0;
 		screenY = 0;
-		position = 0;
 	}
+	//update the internal position
+	position = 2*((screenY*80)+screenX);
+	if(updateCaret)	
+		moveCursor(screenX, screenY);
 }
 void puts(char* str) {
 	int length = strlen(str);
