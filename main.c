@@ -17,7 +17,7 @@ int main(multiboot_header_t *mboot_ptr)
 	idt_install();
 	isrs_install();
 	irq_install();
-	//timer_install();
+	timer_install();
 	keyboard_install();
 	init_video();
 

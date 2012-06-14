@@ -19,8 +19,8 @@ void keyboard_handler(struct regs* r) {
 		if(scancode == 0x2A) key_status |= SHIFT_MASK;
 
 		if(key_status & SHIFT_MASK)
-			putch(upperKeyMap[scancode], 0);
+			putch(upperKeyMap[scancode], 1);
 		else
-			putch(lowerKeyMap[scancode], 0);
+			putch(lowerKeyMap[scancode], 1);
 	}
 }
