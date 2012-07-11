@@ -14,7 +14,7 @@ void timer_handler(struct regs* r) {
 
 	if(timer_ticks % 18 == 0) {
 		//approximately a second has passed
-		puts("One second has passed\n");
+		//puts("One second has passed\n");
 	}
 }
 

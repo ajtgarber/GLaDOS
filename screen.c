@@ -5,7 +5,7 @@ void init_video() {
 	position = 0;
 	screenX = 0;
 	screenY = 0;
-	foreground = WHITE;
+	foreground = LIGHT_GREEN;
 	background = BLACK;
 	updateColour();
 	cls();
@@ -49,8 +49,7 @@ void putch(char c, char updateCaret) {
 		}
 	}
 	if(screenY >= 25) {
-		screenX = 0;
-		screenY = 0;
+		scroll();
 	}
 	//update the internal position
 	position = 2*((screenY*80)+screenX);
@@ -154,4 +153,29 @@ char isPrintable(char c) {
 	if(c == '\n') return 1;
 	if(c < 32 || c == 127) return 0;
 	return 1;
+}
+void scroll() {
+	//Row 25 is the end, this means we need to scroll up
+	if(screenY >= 25) {
+		//Move the current text chunk that makes up the screen
+		//back in the buffer by a line
+		int i;
+		for(i = 0*80; i < 48*80; i++) {
+			texmemptr[i] = texmemptr[i+160];
+		}
+
+		//The last line should now be blank. Do this by writing
+		//80 spaces to it;
+		for(i = 48*80; i < 50*80; i++) {
+			if(i % 2 == 0) {
+				texmemptr[i] = ' ';
+			} else {
+				texmemptr[i] = colour;
+			}		
+		}
+		//The cursor should now be on the last line.
+		screenY = 24;
+		screenX = 0;
+		moveCursor(screenX, screenY);
+	}
 }

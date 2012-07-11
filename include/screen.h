@@ -40,5 +40,6 @@ void setBackground(int background);
 void setForeground(int foreground);
 void updateColour();
 void moveCursor(int x, int y);
+void scroll();
 
 #endif
