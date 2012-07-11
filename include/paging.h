@@ -4,8 +4,8 @@
 #ifndef PAGING_H
 #define PAGING_H
 
-#include "common.h"
-#include "system.h"
+#include <system.h>
+#include <common.h>
 
 typedef struct page
 {
@@ -43,6 +43,10 @@ typedef struct page_directory
     u32int physicalAddr;
 } page_directory_t;
 
+
+extern page_directory_t* kernel_directory;
+extern page_directory_t* current_directory;
+
 /**
    Sets up the environment, page directories etc and
    enables paging.
@@ -65,11 +69,6 @@ page_t *get_page(u32int address, int make, page_directory_t *dir);
 /**
    Handler for page faults.
 **/
-void page_fault(struct regs regs);
-
-/**
-   Makes a copy of a page directory.
-**/
-page_directory_t *clone_directory(page_directory_t *src);
+void page_fault(struct regs r);
 
 #endif

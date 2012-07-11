@@ -35,7 +35,6 @@ mboot:
 [EXTERN main]                   ; This is the entry point of our C code
 
 start:
-	push esp
     ; Load multiboot information:
     push    ebx
 
