@@ -9,10 +9,12 @@
 #include <fs.h>
 #include <initrd.h>
 
+u32int initial_esp;
 extern u32int placement_address;
 
-int main(multiboot_header_t *mboot_ptr)
+int main(multiboot_header_t *mboot_ptr, u32int initial_stack)
 {
+	initial_esp = initial_stack;
 	gdt_install();
 	idt_install();
 	isrs_install();
@@ -20,15 +22,17 @@ int main(multiboot_header_t *mboot_ptr)
 	timer_install();
 	keyboard_install();
 	init_video();
+	puts("Subsystems set up\n");
 
 	ASSERT(mboot_ptr->mods_count > 0);
 	u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
 	u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
 	//Don't trample our module with placement addresses, please!
 	placement_address = initrd_end;
-
+	puts("Setting up paging...\n");
 	initialise_paging();
 	sti();
+	puts("Paging initialised\n");
 
 	fs_root = initialise_initrd(initrd_location);
 	puts("Testing initrd...\n");

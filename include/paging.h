@@ -71,4 +71,7 @@ page_t *get_page(u32int address, int make, page_directory_t *dir);
 **/
 void page_fault(struct regs r);
 
+page_directory_t* clone_directory(page_directory_t* src);
+page_table_t* clone_table(page_table_t* src, u32int *physAddr);
+
 #endif
