@@ -30,7 +30,7 @@ int main(multiboot_header_t *mboot_ptr, u32int initial_stack)
 	//Don't trample our module with placement addresses, please!
 	placement_address = initrd_end;
 	puts("Setting up paging...\n");
-	initialise_paging();
+	//initialise_paging();
 	sti();
 	puts("Paging initialised\n");
 

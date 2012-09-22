@@ -143,13 +143,13 @@ void initialise_paging()
     while (i < placement_address+0x1000)
     {
         // Kernel code is readable but not writeable from userspace.
-        alloc_frame( get_page(i, 1, kernel_directory), 0, 0);
+        alloc_frame( get_page(i, 1, kernel_directory), 1, 0);
         i += 0x1000;
     }
 
 	//Now allocate those pages we mapped earlier
 	for(i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += 0x1000)
-		alloc_frame( get_page(i, 1, kernel_directory), 0, 0);
+		alloc_frame( get_page(i, 1, kernel_directory), 1, 0);
 
     // Before we enable paging, we must register our page fault handler.
     isr_install_handler(14, page_fault);

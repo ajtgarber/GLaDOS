@@ -17,7 +17,7 @@ iso:
 	isofiles/geniso.sh
 
 run:
-	qemu -cdrom isofiles/glados.iso
+	qemu-system-i386 -cdrom isofiles/glados.iso
 
 clean:
 	-rm *.o kernel
